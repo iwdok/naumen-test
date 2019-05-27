@@ -1,0 +1,64 @@
+.info > div{
+    color: whitesmoke;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.info{
+    display: inline-flex;
+    align-items: stretch;
+    justify-content: center;
+    padding-left: 10px;
+    width: 100%;
+    margin: 10px auto;
+}
+
+.oldest{
+    margin-left: 20px;
+}
+
+.results-count, .time{
+    margin-left: 5px;
+}
+
+.oldest:hover, .newest:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.filter{
+    text-align: right;
+    padding-left: 20px;
+}
+
+.filter > select{
+    background: #444446;
+    padding-bottom: 2px;
+    border: none;
+    border-radius: 4px;
+    color: whitesmoke;
+    outline: none;
+    cursor: pointer;
+}
+
+.filter > select:focus{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.filter > select > option {
+    cursor: pointer;
+    color: whitesmoke;
+    border: none;
+    opacity: 0.8;
+    transition: 0.1s;
+}
+
+.filter > select > option:hover {
+    box-shadow: inset 0 0 10px 10px #FFFFFF;
+}
+
+.filter > select > option:last-child{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

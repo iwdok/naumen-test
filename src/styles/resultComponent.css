@@ -1,0 +1,44 @@
+.result-container{
+    width: 70vw;
+    max-width: 1080px;
+    margin: 0 auto;
+    background: #444446;
+    border-radius: 20px;
+    padding: 0.8em 1em;
+}
+
+.results{
+    color: #FFFFFF;
+    margin-top: 1em;
+}
+
+.link-click{
+    cursor: pointer;
+}
+
+.snippet{
+    font-size: small;
+    line-height: 18px;
+}
+
+.title{
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    transition: 0.1s;
+    color: #0F87C3;
+}
+
+.title:hover{
+    text-decoration: underline;
+}
+
+.link{
+    font-size: 14px;
+    color: #9bd2ff;
+    margin: 0 0 5px 0;
+}
+
+.searchmatch{
+    font-size: medium;
+    text-decoration: underline;
+}

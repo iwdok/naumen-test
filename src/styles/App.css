@@ -1,0 +1,21 @@
+*{
+    outline: none;
+    font-family: 'Roboto';
+}
+
+body{
+    background: #222226;
+    overflow-x: hidden;
+}
+
+.day-theme{
+    background: #FFFFFF;
+}
+
+a, link{
+    text-decoration: none;
+}
+
+.App{
+    position: relative;
+}
