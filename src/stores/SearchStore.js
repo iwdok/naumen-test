@@ -1,7 +1,17 @@
 import {observable, action, computed} from "mobx";
+import Cookies from 'js-cookie';
 
 class SearchStore {
+    @observable preset_cookie = Cookies.get('preset_list');
+    @observable preset_list = this.preset_cookie ? JSON.parse(this.preset_cookie).array : [];
+
     @action results(){
+        console.log(this.preset_list);
+         if (this.preset_list.length > 3){
+            this.preset_list.shift();
+        }
+        this.preset_list.push(this.searchQuery);
+        Cookies.set('preset_list', {array: this.preset_list}, { expires: 30 });
         let time = performance.now();
         fetch(`https://ru.wikipedia.org/w/api.php?action=query&list=search&format=json&iwurl=true&origin=*&srsearch=${this.searchQuery}&srlimit=20&srprop=wordcount|timestamp|snippet|categorysnippet`)
             .then((res) => {
@@ -10,7 +20,7 @@ class SearchStore {
                         wordcount = [],
                         search_results = data.query.search,
                         id = 0;
-                    this.searchOffset = data.continue.sroffset;
+                    this.searchOffset = data.continue ? data.continue.sroffset : 0;
                     for (let result of search_results){
                         result.snippet = result.snippet.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
                         wordcount.push(result.wordcount);
@@ -154,19 +164,32 @@ class SearchStore {
         }
     }
 
-    @computed get subResults(){
-        fetch(`https://ru.wikipedia.org/w/api.php?action=query&list=search&format=json&iwurl=true&origin=*&srsearch=${this.query}&srlimit=8&srprop=title`)
-            .then((res) => {
-                res.json().then(data => {
+    @action subResults(){
+        if (this.query){
+            fetch(`https://ru.wikipedia.org/w/api.php?action=query&list=search&format=json&iwurl=true&origin=*&srsearch=${this.query}&srlimit=8&srprop=title`)
+                .then((res) => {
                     this.subSearch = [];
-                    for (let element of data.query.search){
-                        this.subSearch.push(element.title);
+                    let regexp = new RegExp(this.query, 'ig'),
+                        counter = 8;
+                    for (let element of this.preset_list){
+                        if (element.match(regexp)){
+                            this.subSearch.push(element);
+                            counter--;
+                        }
                     }
+                    res.json().then(data => {
+                        for (let element of data.query.search){
+                            if (counter > 0){
+                                this.subSearch.push(element.title);
+                                counter--;
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        }
     }
 
     @computed get newestDate(){

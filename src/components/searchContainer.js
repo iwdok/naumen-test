@@ -16,7 +16,7 @@ class SearchContainer extends Component{
 
     searchChanged(e) {
         this.store.query = e.target.value;
-        this.store.subResults;
+        this.store.subResults();
     }
 
     startSearch(){
